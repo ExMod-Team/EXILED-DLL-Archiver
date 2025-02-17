@@ -27,7 +27,7 @@ jobs:
         run: msbuild EXILED-DLL-Archiver\EXILED-DLL-Archiver.csproj -t:rebuild -verbosity:diag -property:Configuration=Release
         
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: EXILED-DLL-Archiver.exe
           path: EXILED-DLL-Archiver/bin/Release/EXILED-DLL-Archiver.exe

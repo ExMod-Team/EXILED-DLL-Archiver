@@ -23,8 +23,8 @@ namespace EXILED_DLL_Archiver
             string exiled_plugins_deps_path = Path.Combine(exiled_plugins_path, "dependencies");
             string scpsl_path = Path.Combine(path, "SCP Secret Laboratory");
             string labapi_path = Path.Combine(scpsl_path, "LabAPI-Beta");
-            string labapi_plugin_path = Path.Combine(labapi_path, "plugins");
-            string labapi_dependencies_path = Path.Combine(labapi_path, "dependencies");
+            string labapi_plugin_path = Path.Combine(labapi_path, "plugins", "global");
+            string labapi_dependencies_path = Path.Combine(labapi_path, "dependencies", "global");
 
             List<string> plugins = new List<string> { "Exiled.CreditTags", "Exiled.CustomItems", "Exiled.CustomRoles", "Exiled.Events", "Exiled.Permissions", };
             List<string> pluginsDep = new List<string> { "0Harmony", "System.ComponentModel.DataAnnotations" };

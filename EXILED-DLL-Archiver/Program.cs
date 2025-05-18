@@ -22,7 +22,7 @@ namespace EXILED_DLL_Archiver
             string exiled_plugins_path = Path.Combine(exiled_path, "Plugins");
             string exiled_plugins_deps_path = Path.Combine(exiled_plugins_path, "dependencies");
             string scpsl_path = Path.Combine(path, "SCP Secret Laboratory");
-            string labapi_path = Path.Combine(scpsl_path, "LabAPI-Beta");
+            string labapi_path = Path.Combine(scpsl_path, "LabAPI");
             string labapi_plugin_path = Path.Combine(labapi_path, "plugins", "global");
             string labapi_dependencies_path = Path.Combine(labapi_path, "dependencies", "global");
 

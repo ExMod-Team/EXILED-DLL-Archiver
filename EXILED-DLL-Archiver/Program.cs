@@ -3,7 +3,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 
 using ICSharpCode.SharpZipLib.GZip;
 using ICSharpCode.SharpZipLib.Tar;
@@ -19,19 +18,27 @@ namespace EXILED_DLL_Archiver
             string fileName = string.Empty;
             string destFile = string.Empty;
 
-            string exiled_plugins_path = Path.Combine(path, "EXILED", "Plugins");
+            string exiled_path = Path.Combine(path, "EXILED");
+            string exiled_plugins_path = Path.Combine(exiled_path, "Plugins");
             string exiled_plugins_deps_path = Path.Combine(exiled_plugins_path, "dependencies");
-            string nw_plugin_path = Path.Combine(path, "SCP Secret Laboratory", "PluginAPI", "plugins", "global");
-            string nw_plugin_deps_path = Path.Combine(nw_plugin_path, "dependencies");
+            string scpsl_path = Path.Combine(path, "SCP Secret Laboratory");
+            string labapi_path = Path.Combine(scpsl_path, "LabAPI");
+            string labapi_plugin_path = Path.Combine(labapi_path, "plugins", "global");
+            string labapi_dependencies_path = Path.Combine(labapi_path, "dependencies", "global");
 
-            List<string> plugins = new List<string> { "Exiled.CreditTags", "Exiled.CustomItems", "Exiled.CustomRoles", "Exiled.Events", "Exiled.Permissions" };
+            List<string> plugins = new List<string> { "Exiled.CreditTags", "Exiled.CustomItems", "Exiled.CustomRoles", "Exiled.Events", "Exiled.Permissions", };
             List<string> pluginsDep = new List<string> { "0Harmony", "System.ComponentModel.DataAnnotations" };
             List<string> nwDep = new List<string> { "Exiled.API", "SemanticVersioning", "Mono.Posix" };
 
             try
             {
+                if (Directory.Exists(exiled_path))
+                    Directory.Delete(exiled_path, true);
+                if (Directory.Exists(scpsl_path))
+                    Directory.Delete(scpsl_path, true);
                 Directory.CreateDirectory(exiled_plugins_deps_path);
-                Directory.CreateDirectory(nw_plugin_deps_path);
+                Directory.CreateDirectory(labapi_plugin_path);
+                Directory.CreateDirectory(labapi_dependencies_path);
 
                 try
                 {
@@ -52,11 +59,11 @@ namespace EXILED_DLL_Archiver
                     foreach (string str in nwDep)
                     {
                         fileName = Path.Combine(path, str + ".dll");
-                        destFile = Path.Combine(nw_plugin_deps_path, str + ".dll");
+                        destFile = Path.Combine(labapi_dependencies_path, str + ".dll");
                         File.Copy(fileName, destFile, true);
                     }
 
-                    File.Copy(Path.Combine(path, "Exiled.Loader.dll"), Path.Combine(nw_plugin_path, "Exiled.Loader.dll"), true);
+                    File.Copy(Path.Combine(path, "Exiled.Loader.dll"), Path.Combine(labapi_plugin_path, "Exiled.Loader.dll"), true);
                 }
                 catch (FileNotFoundException e)
                 {
@@ -65,18 +72,15 @@ namespace EXILED_DLL_Archiver
                     Console.ReadLine();
                     return;
                 }
-
                 CreateTarGZ(Path.Combine(path, "Exiled.tar.gz"), path);
-            } 
+            }
             catch (Exception ex)
             {
                 Console.WriteLine(ex);
                 Console.ReadLine();
                 return;
             }
-            
         }
-
         private static void CreateTarGZ(string tgzFilename, string sourceDirectory)
         {
             Stream outStream = File.Create(tgzFilename);
